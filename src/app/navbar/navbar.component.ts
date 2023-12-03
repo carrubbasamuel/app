@@ -4,6 +4,8 @@ import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { OffcanvasService } from '../offcanvas/offcanvas.service';
 
+
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -21,11 +23,16 @@ export class NavbarComponent {
     this.cart$ = store.select('cart')
     this.cart$.subscribe((data) => {
       this.numberCart = data.cart.length;
-    });
+    });    
   }
 
-  openOffcanvas() {
-    this.offcanvasService.open();
+  open(): void {
+    const template = this.offcanvasService.getTemplate();
+    if (template) {
+      this.offcanvasService.open(template);
+    }
   }
+
+
 
 }

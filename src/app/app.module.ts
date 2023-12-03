@@ -9,7 +9,6 @@ import { StoreModule } from '@ngrx/store';
 import { cartReducer } from "./redux/cart/cart.reducer";
 import { TestModule } from "./test/test.module";
 import { OffcanvasModule } from "./offcanvas/offcanvas.module";
-import { OffcanvasService } from "./offcanvas/offcanvas.service";
 
 @NgModule({
   declarations: [
@@ -23,9 +22,6 @@ import { OffcanvasService } from "./offcanvas/offcanvas.service";
     NavbarModule,
     StoreModule.forRoot({ cart: cartReducer }),
     OffcanvasModule,
-  ],
-  providers: [
-    OffcanvasService,
   ],
   bootstrap: [
     AppComponent,

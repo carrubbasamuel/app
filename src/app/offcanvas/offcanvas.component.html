@@ -1,11 +1,36 @@
 <ng-template #content let-offcanvas>
-	<div class="offcanvas-header">
-		<h4 class="offcanvas-title" id="offcanvas-basic-title">Profile update</h4>
-		<button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button>
-	</div>
-	<div class="offcanvas-body">
-	</div>
+    <div class="offcanvas-header">
+        <h4 class="offcanvas-title" id="offcanvas-basic-title">Shopping List</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div *ngFor="let item of products">
+            <div class="product-item">
+                <img src={{item.product.images[0]}} alt="">
+                <div>
+                    <h5>{{ item.product.title }}</h5>
+                    <p>{{ item.product.description }}</p>
+                    <div class="d-flex justify-content-between w-100">
+                        <p>Price: {{ item.product.price }}</p>
+                        <div>
+                            <button (click)="removeProductToCart(item.product.id)">-</button>
+                            {{ item.quantity }}
+                            <button (click)="addProductToCart(item.product.id)">+</button>
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+            <div class="d-flex w-100">
+                <h3>Total:  </h3>
+                <p>{{ item.total }}</p>
+
+            </div>
+        </div>
+    </div>
+    <div class="total-cart">
+        <h3>Total: {{ getTotalCart() }}</h3>
+        <button (click)="trashCart()">Svuota carrello</button>
+    </div>
 </ng-template>
-
-
-

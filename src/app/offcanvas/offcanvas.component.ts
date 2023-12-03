@@ -1,16 +1,55 @@
-// ngbd-offcanvas-basic.component.ts
-import { Component, AfterViewInit } from '@angular/core';
+// offcanvas.component.ts
+import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
 import { OffcanvasDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { OffcanvasService } from './offcanvas.service';
+import { removeProduct, trashAll, addPlusProduct } from '../redux/cart/cart.action';
 
 @Component({
   selector: 'ngbd-offcanvas-basic',
   templateUrl: './offcanvas.component.html',
+  styleUrls: ['./offcanvas.component.css'],
 })
 export class NgbdOffcanvasBasic implements AfterViewInit {
+  @ViewChild('content') contentTemplate!: TemplateRef<any>;
   closeResult = '';
+  cart$: Observable<any>;
+  products: any;
 
-  constructor(private offcanvasService: OffcanvasService) {}
+  constructor(
+    private offcanvasService: OffcanvasService,
+    private store: Store<{ cart: any }>
+  ) {
+    this.cart$ = store.select('cart');
+    this.cart$.subscribe((data) => {
+      this.products = data.cart;
+      this.products = this.products.map((item: any) => {
+        return {
+          ...item,
+          total: item.product.price * item.quantity,
+        };
+      });
+    });
+    
+  }
+
+  getTotalCart(){
+    let total = 0;
+    this.products.forEach((item: any) => {
+      total += item.total;
+    });
+    return total;
+  }
+
+  removeProductToCart(id: any) {
+    this.store.dispatch(removeProduct({ id }));
+  }
+
+  addProductToCart(id: any) {
+    this.store.dispatch(addPlusProduct({ id}));
+  }
+
 
   ngAfterViewInit(): void {
     const offcanvasInstance = this.offcanvasService.getOffcanvasInstance();
@@ -25,6 +64,11 @@ export class NgbdOffcanvasBasic implements AfterViewInit {
         }
       );
     }
+    this.offcanvasService.setTemplate(this.contentTemplate);
+  }
+
+  trashCart() {
+    this.store.dispatch(trashAll());
   }
 
   private getDismissReason(reason: any): string {
