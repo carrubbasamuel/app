@@ -24,11 +24,9 @@ export class OffcanvasService {
 
     setTemplate(template: TemplateRef<any>): void {
         this.template$ = template;
-        console.log('Template set:', this.template$);
     }
 
     getTemplate(): TemplateRef<any> | null {
-        console.log('Template get:', this.template$);
         return this.template$;
     }
 

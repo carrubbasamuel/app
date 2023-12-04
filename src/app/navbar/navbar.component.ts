@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
@@ -18,13 +19,16 @@ export class NavbarComponent {
 
   constructor(
     private store: Store<{ cart: any }>,
-    private offcanvasService: OffcanvasService
+    private offcanvasService: OffcanvasService,
+    private http: HttpClient,
   ) {
     this.cart$ = store.select('cart')
     this.cart$.subscribe((data) => {
       this.numberCart = data.cart.length;
     });    
   }
+
+  
 
   open(): void {
     const template = this.offcanvasService.getTemplate();

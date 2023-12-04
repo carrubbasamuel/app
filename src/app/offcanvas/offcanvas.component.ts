@@ -1,13 +1,12 @@
-// offcanvas.component.ts
 import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
 import { OffcanvasDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { addPlusProduct, removeProduct, trashAll } from '../redux/cart/cart.action';
 import { OffcanvasService } from './offcanvas.service';
-import { removeProduct, trashAll, addPlusProduct } from '../redux/cart/cart.action';
 
 @Component({
-  selector: 'ngbd-offcanvas-basic',
+  selector: 'c-offcanvas',
   templateUrl: './offcanvas.component.html',
   styleUrls: ['./offcanvas.component.css'],
 })
